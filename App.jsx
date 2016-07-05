@@ -28,8 +28,8 @@ console.log(this.state)
   return(
   	<div>
   	<Form getProp={this.setProps}/>
-  	<List/>
-  	</div>
+  	<Data sendState={this.state}/>
+  	</div >
   	);
   }
 });

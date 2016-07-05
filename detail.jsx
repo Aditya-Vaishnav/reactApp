@@ -4,10 +4,10 @@ const Data = React.createClass({
   render: function(){
   	return(
       <div>
-    <h3>{this.props.nameProp}</h3>
-    <h4>{this.props.collegeProp}</h4>
-    <h4>{this.props.mobileProp}</h4>
-    <h4>{this.props.mailProp}</h4>
+    <h3>{this.props.sendState.name}</h3>
+    <h4>{this.props.sendState.college}</h4>
+    <h4>{this.props.sendState.mobile}</h4>
+    <h4>{this.props.sendState.mail}</h4>
     </div>
     );
   }
