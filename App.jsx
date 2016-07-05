@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './form.jsx';
-import Data from './deatail.jsx';
+import Data from './detail.jsx';
+import List from  './List.jsx';
 
 const App = React.createClass({
 	getInitialState: function(){
@@ -11,25 +12,23 @@ const App = React.createClass({
       	mail:""
     }
 	},
-	setProps: function(n,c,mob,mail){
+	setProps: function(_name,_college,_mobile,_mail){
 		this.setState({
-				name: n,
-				college: c,
-				mobile: mob,
-				mail: mail
+				name: _name,
+				college: _college,
+				mobile: _mobile,
+				mail: _mail
 		})
 	},
 
   render: function(){
+
+console.log(this.state)
+
   return(
   	<div>
-  	<Form getProp={this.setProps.bind(this)}/>
-  	<Data 
-  		nameProp={this.state.name}
-			collegeProp={this.state.college}
-			mobileProp={this.state.mobile}
-			mailProp={this.state.mail}
-  	/>
+  	<Form getProp={this.setProps}/>
+  	<List/>
   	</div>
   	);
   }

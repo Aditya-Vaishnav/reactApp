@@ -2,79 +2,71 @@ import React from 'react';
 
 const Form = React.createClass({
 
-  getInitialState: function(){
+  getInitialState: function(){     
     return{
-      vaild_name:false,
-      vaild_college:false,
-      vaild_mobile:false,
-      vaild_mail:false,
       name:"",
       college:"",
       mobile:"",
       mail:""
       }
   },
-
 	isVaildName: function(e){
     this.setState({
       name: e.target.value
     })
-    e.target.value.length <= 2?this.setState({
-      vaild_name: false
-    }):this.setState({vaild_name: true})
   },
   isVaildCollege: function(e){
     this.setState({
       college: e.target.value
     })
-    e.target.value.length <= 2?this.setState({
-      vaild_college: false
-    }):this.setState({vaild_college: true})
   },
   isVaildMobile: function(e){
     this.setState({
       mobile: e.target.value
     })
-    e.target.value.length != 10 || isNaN(e.target.value) ?this.setState({
-      vaild_mobile: false
-    }) :this.setState({vaild_mobile: true})
   },
   isVaildMail:function(e){
     this.setState({
       mail: e.target.value
     })
-    let pattern1 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    pattern1.test(e.target.value)?this.setState({vaild_mail:true}) 
-    :this.setState({vaild_mail:false})
   },
 
   submit: function(){
     this.props.getProp(
-      this.state.name,
-      this.state.college,
-      this.state.mobile,
-      this.state.mail
+        this.state.name,
+        this.state.college,
+        this.state.mobile,
+        this.state.mail
       )
-  },
+    //this.clear()
+    },
 
 	testIt:function(){
-		this.state.vaild_name && this.state.vaild_mail && this.state.vaild_college && this.state.vaild_mobile ? 
-    this.submit()
-    :alert('check fields')
+    const pattern1 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    this.state.name.length < 2 ? alert('error name') :(
+      this.state.college.length < 2 ? alert('err0r college') :(
+        isNaN(this.state.mobile) || this.state.mobile.length != 10 ? alert('Only 10 digits (0-9) are accepted'): (
+          pattern1.test(this.state.mail)? 
+          this.submit()
+          :alert('error mail')
+        )
+      ) 
+    )
   },
   render: function(){
-  	return(
-  		<div id="form-div">
-  			Name : <input type="text" className={this.state.vaild_name  || this.state.name.length == 0 ? '' : 'input'} onChange={this.isVaildName} /><br/>
-        <p>{this.state.vaild_name || this.state.name.length == 0 ?"":"Error in name field"}</p><br/>
-  			College : <input type="text" className={this.state.vaild_college || this.state.college.length == 0 ? '' : 'input'} onChange={this.isVaildCollege}/><br/>
-        <p>{this.state.vaild_college || this.state.college.length == 0 ?"":"Error in College field"}</p><br/>
-  			Mobile : <input type="text" className={this.state.vaild_mobile || this.state.mobile.length == 0 ? '' : 'input'} onChange={this.isVaildMobile}/><br/>
-        <p>{this.state.vaild_mobile || this.state.mobile.length == 0 ?"":"Only 10 digits (0-9) are accepted"}</p><br/>
-  			E-mail : <input type="text" className={this.state.vaild_mail || this.state.mail.length == 0 ? '' : 'input'} onChange={this.isVaildMail}/><br/>
-  			<p>{this.state.vaild_mail || this.state.mail.length == 0 ?"":"Error in E-mail field"}</p><br/>
+    const pattern1 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return(
+  		<form >
+  			Name : <input type="text" className={this.state.name.length != 0 && this.state.name.length < 2 ?'input':''} onChange={this.isVaildName} /><br/>
+        <p>{this.state.name.length != 0 && this.state.name.length < 2 ?"Error in name field":''}</p><br/>
+  			College : <input type="text" className={this.state.college.length != 0 && this.state.college.length < 2 ?'input':''} onChange={this.isVaildCollege}/><br/>
+        <p>{this.state.college.length != 0 && this.state.college.length < 2 ?"Error in college field":''}</p><br/>
+  			Mobile : <input type="text" className={isNaN(this.state.mobile) || !(this.state.mobile.length == 10  || this.state.mobile.length == 0)?'input':''} onChange={this.isVaildMobile}/><br/>
+        <p>{isNaN(this.state.mobile) || !(this.state.mobile.length == 10  || this.state.mobile.length == 0) ?"Only 10 digits (0-9) are accepted":""}</p><br/>
+  			E-mail : <input type="text" className={pattern1.test(this.state.mail) || this.state.mail.length == 0 ? '' : 'input'} onChange={this.isVaildMail}/><br/>
+  			<p>{pattern1.test(this.state.mail) || this.state.mail.length == 0 ?"":"Error in E-mail field"}</p><br/>
         <button onClick={this.testIt}>Submit</button>
-  		</div>
+  		</form>
   	);
   }
 });
