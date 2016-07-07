@@ -4,12 +4,14 @@ const Form = React.createClass({
 
   getInitialState: function(){     
     return{
+      id:"",
       name:"",
       college:"",
       mobile:"",
       mail:""
       }
   },
+
 	isVaildName: function(e){
     this.setState({
       name: e.target.value
@@ -32,12 +34,7 @@ const Form = React.createClass({
   },
 
   submit: function(){
-    this.props.getProp(
-        this.state.name,
-        this.state.college,
-        this.state.mobile,
-        this.state.mail
-      )
+    this.props.getProp(this.state)
     this.setState({
       name: "",
       college: "",
@@ -70,7 +67,7 @@ const Form = React.createClass({
         <p>{isNaN(this.state.mobile) || !(this.state.mobile.length == 10  || this.state.mobile.length == 0) ?"Only 10 digits (0-9) are accepted":""}</p><br/>
   			E-mail : <input type="text" className={pattern1.test(this.state.mail) || this.state.mail.length == 0 ? '' : 'input'} value={this.state.mail} placeholder="Enter email" onChange={this.isVaildMail}/><br/>
   			<p>{pattern1.test(this.state.mail) || this.state.mail.length == 0 ?"":"Error in E-mail field"}</p><br/>
-        <button onClick={this.testIt}>Submit</button>
+        <button onClick={this.submit}>submit</button>
   		</div>
   	);
   }

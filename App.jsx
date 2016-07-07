@@ -1,35 +1,47 @@
 import React from 'react';
 import Form from './form.jsx';
-import Data from './detail.jsx';
-import List from  './List.jsx';
+import Data from './DetailElement.jsx';
+import List from  './DetailList.jsx';
 
 const App = React.createClass({
 	getInitialState: function(){
 		return{
-			 	name:"",
-      	college:"",
-      	mobile:"",
-      	mail:""
+      list: []
     }
+  },
+	setProps(objectValue){
+		let tmpList = this.state.list
+    tmpList.push(objectValue)
+    this.setState({
+		  list:tmpList
+    });
 	},
-	setProps: function(_name,_college,_mobile,_mail){
-		this.setState({
-				name: _name,
-				college: _college,
-				mobile: _mobile,
-				mail: _mail
-		})
-	},
+  remove(index){
+    var newList = []
+    this.state.list.map(function(item,i){
+      i==index?'':newList.push(item)
+    })
+    this.setState({ list: newList });
+  },
 
   render: function(){
-
-console.log(this.state)
-
   return(
   	<div>
-  	<Form getProp={this.setProps}/>
-  	<Data sendState={this.state}/>
-  	</div >
+  	<table>
+     <tbody>
+        <tr>
+        <td className="tableBorder">
+          <Form getProp={this.setProps}/>
+       {/*   <Data sendState={this.state}/>
+       */} </td>
+        <td className="emptycol"></td>
+        <td >
+          <List objectList={this.state.list} removeItem={this.remove}/>
+        </td>
+        </tr>
+        </tbody>
+      </table>
+  	</div>
   	);
   }
 });
