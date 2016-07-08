@@ -1,21 +1,23 @@
 import React from 'react';
 
 const Element = React.createClass({
-  getInitialState: function(){     
+    getInitialState: function(){
     return{
-      id:this.props.keyID,
-      }
+    isEditing: false,
+    }
   },
   edit(){
-    console.log(this.state);
+    this.setState({
+      isEditing: true
+    });
+    console.log('DetailElement:[Edit] After set isEditing to ture ==>',this.props.data);
+    this.props.updateFromElement(this.props.data);
   },
   remove(){
-    this.props.removeFromElement(this.state.id);
+    this.props.removeFromElement(this.props.keyID);
   },
   render: function(){
-
-    console.log(">>>>>>>",this.props.data.name)
-  	return(
+    return(
       <div className="elementBox" id={this.props.keyID}>
         <table>
           <tbody>
@@ -30,6 +32,7 @@ const Element = React.createClass({
                   </tbody>
                 </table>
               </td>
+              {this.state.isEditing?'':
               <td>
                 <table>
                   <tbody>
@@ -38,6 +41,7 @@ const Element = React.createClass({
                   </tbody>
                 </table>
               </td>
+            }
             </tr>
           </tbody>
         </table>
@@ -45,5 +49,4 @@ const Element = React.createClass({
     );
   }
 });
-
 export default Element;
