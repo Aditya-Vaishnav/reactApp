@@ -1,16 +1,7 @@
 import React from 'react';
 
 const Element = React.createClass({
-    getInitialState: function(){
-    return{
-    isEditing: false,
-    }
-  },
   edit(){
-    this.setState({
-      isEditing: true
-    });
-    console.log('DetailElement:[Edit] After set isEditing to ture ==>',this.props.data);
     this.props.updateFromElement(this.props.data);
   },
   remove(){
@@ -21,7 +12,9 @@ const Element = React.createClass({
       <div className="elementBox" id={this.props.keyID}>
         <table>
           <tbody>
-            <tr className="elementHead">  <th colSpan="2">Name : {this.props.data.name}</th> </tr>
+            <tr className="elementHead"> 
+              <th colSpan="2">Name : {this.props.data.name}</th> 
+            </tr>
             <tr>
               <td>
                 <table >
@@ -32,7 +25,6 @@ const Element = React.createClass({
                   </tbody>
                 </table>
               </td>
-              {this.state.isEditing?'':
               <td>
                 <table>
                   <tbody>
@@ -41,7 +33,6 @@ const Element = React.createClass({
                   </tbody>
                 </table>
               </td>
-            }
             </tr>
           </tbody>
         </table>

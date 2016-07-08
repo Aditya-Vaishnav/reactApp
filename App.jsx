@@ -3,69 +3,70 @@ import Form from './form.jsx';
 import List from './DetailList.jsx';
 
 const App = React.createClass({
-	getInitialState: function(){
-		return{
+
+  getInitialState() {
+    return{
       list: [],
-      isEditing: false,
-      elementToEdit: ''
-    }
-  },
-	setProps(objectValue){
-    objectValue.id =this.state.list.length
-    let tmpList = this.state.list
-    tmpList.push(objectValue)
-    this.setState({
-		  list:tmpList
-    });
-	},
-  remove(index){
+      elementToEdit:false
+      }
+    },
+	addToList(objectValue) {
+    console.log("App :[addToList] objectValue ==> ", objectValue)
+    console.log("App :[addToList] objectList ==> ", this.state.list)
     let newList = []
-    this.state.list.map(function(item,i){
+    let edited = false
+    this.state.list.map(function(item,i) {
+      if(item.id == objectValue.id) {
+        newList.push(objectValue)
+        edited = true
+      } else {
+        newList.push(item)
+      }
+    })
+    
+    if(!edited) {
+        newList.push(objectValue)
+      }
+
+    this.setState({
+		  list:newList,
+      elementToEdit: false
+    }); // take element, push to new list and update [this.state.list].
+    console.log("App :[addToList] value of states ==> ",this.state)
+  },
+
+  remove(index) {
+    let newList = []
+    this.state.list.map(function(item,i) {
       i==index?'':newList.push(item)
     })
-    this.setState({ list: newList });
+    this.setState({ list: newList });  // take index and remove it from the list.
   },
-  setToEditingMode(element){
-    console.log("App:[setToEditingMode] EditMode >>",element)
+  setElementForEdit(element) {
+    console.log("App:[setElementForEdit] EditMode >>",element)
     this.setState({
-      isEditing: true,  
       elementToEdit: element
     });
   },
-  getEditedValues(editedData){
-    console.log("App:[getEditedValues] Reveived Values ==> ",editedData);
-    let newList = []
-    this.state.list.map(function(item,i){
-      i==editedData.id?newList.push(editedData) :newList.push(item) 
-    })
-    this.setState({ list : newList },
-      function(){
-        this.setState({ isEditing: false });
-        }) 
-  },
-  render: function(){
-  return(
-  	<div>
-  	  <table>
-        <tbody>
-          <tr>
-            <td className="tableBorder">
-            {console.log("APP: Before Rendering Form ==> isEditing :", this.state.isEditing)}
-              <Form element={this.state.isEditing?this.state.elementToEdit:false}
-                    getProp={this.setProps}
-                    edit={this.state.isEditing}
-                    saveEditedValues={this.getEditedValues}
-                    />
-            </td>
-            <td className="emptycol"></td>
-            <td >
-              <List objectList={this.state.list} removeItem={this.remove} updateItem={this.setToEditingMode}/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  	</div>
-  	);
+  
+  render() {
+    return (
+    	<div>
+    	  <table>
+          <tbody>
+            <tr>
+              <td className="tableBorder">
+                <Form edit= {this.state.elementToEdit} getProp={this.addToList}/>
+              </td>
+              <td className="emptycol"></td>
+              <td >
+                <List objectList={this.state.list} removeItem={this.remove} updateItem={this.setElementForEdit}/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    	</div>
+    );
   }
 });
 
