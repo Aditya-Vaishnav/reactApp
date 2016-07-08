@@ -9,7 +9,7 @@ const Form = React.createClass({
         college:"",
         mobile:"",
         mail:"",
-        inEditMode:false
+        
       }
     } else {
         return {
