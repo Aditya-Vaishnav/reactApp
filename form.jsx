@@ -83,19 +83,25 @@ const Form = React.createClass({
       mail: e.target.value
     }) 
   },
+  
+  
   render(){
+    const isNameValid = this.state.name.length != 0 && this.state.name.length < 2 ?true:false;
+    const isCollegeValid = this.state.college.length != 0 && this.state.college.length < 2 ?true:false;
+    const isMobileValid = isNaN(this.state.mobile) || !(this.state.mobile.length == 10  || this.state.mobile.length == 0)
     const pattern1 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const isEmailValid =  pattern1.test(this.state.mail) || this.state.mail.length == 0 
     return(
   		<div >
-        Name : <input type="text" className={this.state.name.length != 0 && this.state.name.length < 2 ?'input':''} value={this.state.name} placeholder="Enter name" onChange={this.onChangeName} /><br/>
-        <p>{this.state.name.length != 0 && this.state.name.length < 2 ?"Error in name field":''}</p><br/>
-  			College : <input type="text" className={this.state.college.length != 0 && this.state.college.length < 2 ?'input':''} value={this.state.college} placeholder="Enter College name" onChange={this.onChangeCollege}/><br/>
-        <p>{this.state.college.length != 0 && this.state.college.length < 2 ?"Error in college field":''}</p><br/>
-  			Mobile : <input type="text" className={isNaN(this.state.mobile) || !(this.state.mobile.length == 10  || this.state.mobile.length == 0)?'input':''} placeholder="Enter Mobile no." value={this.state.mobile} onChange={this.onChangeMobile}/><br/>
-        <p>{isNaN(this.state.mobile) || !(this.state.mobile.length == 10  || this.state.mobile.length == 0) ?"Only 10 digits (0-9) are accepted":""}</p><br/>
-  			E-mail : <input type="text" className={pattern1.test(this.state.mail) || this.state.mail.length == 0 ? '' : 'input'} value={this.state.mail} placeholder="Enter email" onChange={this.onChangeMail}/><br/>
-  			<p>{pattern1.test(this.state.mail) || this.state.mail.length == 0 ?"":"Error in E-mail field"}</p><br/>
-        <button onClick={this.sendData}>Submit</button>
+        Name : <input type="text" className={isNameValid?'input':''} value={this.state.name} placeholder="Enter name" onChange={this.onChangeName} /><br/>
+        <p>{isNameValid?"Error in name field":''}</p><br/>
+  			College : <input type="text" className={isCollegeValid?'input':''} value={this.state.college} placeholder="Enter College name" onChange={this.onChangeCollege}/><br/>
+        <p>{isCollegeValid?"Error in college field":''}</p><br/>
+  			Mobile : <input type="text" className={isMobileValid?'input':''} placeholder="Enter Mobile no." value={this.state.mobile} onChange={this.onChangeMobile}/><br/>
+        <p>{isMobileValid?"Only 10 digits (0-9) are accepted":""}</p><br/>
+  			E-mail : <input type="text" className={isEmailValid? '' : 'input'} value={this.state.mail} placeholder="Enter email" onChange={this.onChangeMail}/><br/>
+  			<p>{isEmailValid?"":"Error in E-mail field"}</p><br/>
+        <button onClick={this.testIt}>Submit</button>
         </div>
   	);
   } 
