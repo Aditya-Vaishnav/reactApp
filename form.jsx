@@ -36,7 +36,7 @@ const Form = React.createClass ({
     }   
   },
 
-  sendData () {
+  submit () {
       this.props.getProp ( this.state )
       this.clearForm ()
   },
@@ -57,7 +57,7 @@ const Form = React.createClass ({
     else if ( isEmailNotValid ) 
       alert ( 'Error in Email Address' )
     else 
-      this.sendData ()
+      this.submit ()
   },
 
   clearForm () {

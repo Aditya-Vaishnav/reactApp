@@ -18,8 +18,8 @@ const Element = React.createClass({
               <td>
                 <table >
                   <tbody>
-                    <tr>  
-                      <td> { this.props.data.mail } </td>  
+                    <tr> 
+                      <td> { this.props.data.mail } </td>
                     </tr>
                     <tr>  
                       <td> { this.props.data.college } </td> 

@@ -32,7 +32,7 @@ const App = React.createClass ({
     }); 
   },
 
-  remove ( index ) {
+  removeFromList ( index ) {
     let newList = []
     this.state.list.map ( function ( item , i ) { 
       i == index ? '' : newList.push ( item )
@@ -60,7 +60,7 @@ const App = React.createClass ({
               </td>
               <td className = "emptycol" ></td>
               <td >
-                <List objectList = { this.state.list } removeItem = { this.remove }  updateItem = { this.setElementForEdit } />
+                <List objectList = { this.state.list } removeItem = { this.removeFromList }  updateItem = { this.setElementForEdit } />
               </td>
             </tr>
           </tbody>
